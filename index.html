@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CP-Judge PRO - C++ Online Judge</title>
     
-    <!-- Tailwind CSS CDN -->
+    <!-- 1. Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- CodeMirror CSS & JS (Thư viện hiển thị khung gõ code C++) -->
+    <!-- 2. CodeMirror CSS & JS (Thư viện hiển thị khung gõ code C++) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
@@ -176,29 +176,26 @@
         </div>
     </div>
 
-    <!-- Script đính kèm -->
-    <script src="script.js"></script>
-</body>
-</html>
-// Khai báo biến lưu giữ editor
-let editorInstance = null;
+    <!-- TOÀN BỘ CODE JAVASCRIPT ĐƯỢC NHÚNG TRỰC TIẾP TẠI ĐÂY -->
+    <script>
+        let editorInstance = null;
 
-// Khởi tạo CodeMirror khi DOM sẵn sàng
-document.addEventListener('DOMContentLoaded', () => {
-    const textarea = document.getElementById('code-editor');
-    if (textarea && typeof CodeMirror !== 'undefined') {
-        editorInstance = CodeMirror.fromTextArea(textarea, {
-            mode: 'text/x-c++src',
-            theme: 'dracula',
-            lineNumbers: true,
-            indentUnit: 4,
-            tabSize: 4,
-            matchBrackets: true,
-            lineWrapping: true
-        });
+        // Khởi tạo Editor khi tải xong trang
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('code-editor');
+            if (textarea && typeof CodeMirror !== 'undefined') {
+                editorInstance = CodeMirror.fromTextArea(textarea, {
+                    mode: 'text/x-c++src',
+                    theme: 'dracula',
+                    lineNumbers: true,
+                    indentUnit: 4,
+                    tabSize: 4,
+                    matchBrackets: true,
+                    lineWrapping: true
+                });
 
-        // Set mã nguồn C++ mẫu ban đầu
-        editorInstance.setValue(`#include <iostream>
+                // Set code C++ mẫu
+                editorInstance.setValue(`#include <iostream>
 using namespace std;
 
 int main() {
@@ -208,73 +205,42 @@ int main() {
     }
     return 0;
 }`);
-    }
-});
+            }
+        });
 
-/* ==========================================================================
-   GẮN TRỰC TIẾP HÀM VÀO WINDOW ĐỂ HTML GỌI ONCLICK KHÔNG BỊ LỖI DEFINED
-   ========================================================================== */
+        /* ==========================================================================
+           CÁC HÀM XỬ LÝ NÚT BẤM
+           ========================================================================== */
 
-// 1. Chuyển Tab giao diện
-window.switchTab = function(tabName) {
-    console.log("Đã chuyển tab:", tabName);
-    if (tabName !== 'editor') {
-        alert(`Bạn vừa chọn tab: ${tabName}`);
-    }
-};
+        // 1. Chuyển Tab
+        window.switchTab = function(tabName) {
+            console.log("Đã chọn tab:", tabName);
+            if (tabName !== 'editor') {
+                alert(`Bạn vừa chọn tab: ${tabName}`);
+            }
+        };
 
-// 2. Mở Modal nhập PIN Admin
-window.handleAdminTabClick = function() {
-    const modal = document.getElementById('modal-pin');
-    if (modal) {
-        modal.classList.remove('hidden');
-    }
-};
+        // 2. Mở Modal PIN Admin
+        window.handleAdminTabClick = function() {
+            const modal = document.getElementById('modal-pin');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        };
 
-// 3. Đóng Modal PIN Admin
-window.closeAdminModal = function() {
-    const modal = document.getElementById('modal-pin');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-};
+        // 3. Đóng Modal PIN
+        window.closeAdminModal = function() {
+            const modal = document.getElementById('modal-pin');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        };
 
-// 4. Xác nhận PIN Admin
-window.submitAdminPin = function() {
-    const pinInput = document.getElementById('admin-pin-input');
-    if (pinInput && pinInput.value === '123456') {
-        alert('Đăng nhập Quản Trị Viên thành công!');
-        window.closeAdminModal();
-    } else {
-        alert('Mật khẩu PIN không chính xác! (Mặc định: 123456)');
-    }
-};
-
-// 5. Reset code C++ về mặc định
-window.resetCode = function() {
-    if (editorInstance) {
-        editorInstance.setValue(`#include <iostream>\nusing namespace std;\n\nint main() {\n    // Nhập code C++ tại đây...\n    return 0;\n}`);
-    }
-};
-
-// 6. Nút Chạy thử code
-window.runCode = function() {
-    const resultBox = document.getElementById('judge-result');
-    if (resultBox) {
-        resultBox.innerHTML = '<span class="text-yellow-400">⏳ Đang biên dịch &amp; chạy thử...</span>';
-        setTimeout(() => {
-            resultBox.innerHTML = '<span class="text-emerald-400 font-bold">✓ Biên dịch thành công! Output mẫu: 15</span>';
-        }, 800);
-    }
-};
-
-// 7. Nút Nộp bài
-window.submitCode = function() {
-    const resultBox = document.getElementById('judge-result');
-    if (resultBox) {
-        resultBox.innerHTML = '<span class="text-yellow-400">⏳ Đang chấm bài trên hệ thống testcases...</span>';
-        setTimeout(() => {
-            resultBox.innerHTML = '<span class="text-emerald-400 font-bold">AC 100/100 — TẤT CẢ TESTCASES ĐỀU ĐÚNG! 🎉</span>';
-        }, 1200);
-    }
-};
+        // 4. Nhập PIN Admin
+        window.submitAdminPin = function() {
+            const pinInput = document.getElementById('admin-pin-input');
+            if (pinInput && pinInput.value === '2008') {
+                alert('Đăng nhập Quản Trị Viên thành công!');
+                window.closeAdminModal();
+            } else {
+                alert('Mật khẩu PIN không chính xác! (Mặc định: )');
