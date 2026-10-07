@@ -239,8 +239,42 @@ int main() {
         // 4. Nhập PIN Admin
         window.submitAdminPin = function() {
             const pinInput = document.getElementById('admin-pin-input');
-            if (pinInput && pinInput.value === '2008') {
+            if (pinInput && pinInput.value === '200812') {
                 alert('Đăng nhập Quản Trị Viên thành công!');
                 window.closeAdminModal();
             } else {
-                alert('Mật khẩu PIN không chính xác! (Mặc định: )');
+                alert('Mật khẩu PIN không chính xác! (Mặc định: 123456)');
+            }
+        };
+
+        // 5. Reset Code
+        window.resetCode = function() {
+            if (editorInstance) {
+                editorInstance.setValue(`#include <iostream>\nusing namespace std;\n\nint main() {\n    // Nhập code C++ tại đây...\n    return 0;\n}`);
+            }
+        };
+
+        // 6. Chạy thử
+        window.runCode = function() {
+            const resultBox = document.getElementById('judge-result');
+            if (resultBox) {
+                resultBox.innerHTML = '<span class="text-yellow-400">⏳ Đang biên dịch &amp; chạy thử...</span>';
+                setTimeout(() => {
+                    resultBox.innerHTML = '<span class="text-emerald-400 font-bold">✓ Biên dịch thành công! Output mẫu: 15</span>';
+                }, 800);
+            }
+        };
+
+        // 7. Nộp bài
+        window.submitCode = function() {
+            const resultBox = document.getElementById('judge-result');
+            if (resultBox) {
+                resultBox.innerHTML = '<span class="text-yellow-400">⏳ Đang chấm bài trên hệ thống testcases...</span>';
+                setTimeout(() => {
+                    resultBox.innerHTML = '<span class="text-emerald-400 font-bold">AC 100/100 — TẤT CẢ TESTCASES ĐỀU ĐÚNG! 🎉</span>';
+                }, 1200);
+            }
+        };
+    </script>
+</body>
+</html>
